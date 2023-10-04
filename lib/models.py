@@ -28,26 +28,9 @@ class Review(Base):
     customer_id = Column(Integer, ForeignKey('customers.id'))
     restaurant = relationship('Restaurant', back_populates='reviews')
     customer = relationship('Customer', back_populates='reviews')
-class Review(Base):
-    # ...
-    def customer(self):
-        return self.customer
 
-    def restaurant(self):
-        return self.restaurant
+engine = create_engine("sqlite:///seeds.db")
+Base.metadata.create_all(engine)
 
-class Restaurant(Base):
-    # ...
-    def reviews(self):
-        return self.reviews
-
-    def customers(self):
-        return self.customers
-
-class Customer(Base):
-    # ...
-    def reviews(self):
-        return self.reviews
-
-    def restaurants(self):
-        return self.restaurants
+Session = sessionmaker(bind=engine)
+session = Session()
